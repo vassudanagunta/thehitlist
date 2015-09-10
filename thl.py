@@ -16,7 +16,7 @@ class THLParser(OptionParser):
     def __init__(self):
         OptionParser.__init__(self, usage=USAGE)
         self.add_option("--list", dest="list",
-            default='inbox', help="Use a specific list")
+                        default='inbox', help="Use a specific list")
 
     def parse_args(self):
         opts, args = OptionParser.parse_args(self)
