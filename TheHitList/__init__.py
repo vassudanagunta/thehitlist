@@ -2,21 +2,21 @@ try:
     import appscript
 except ImportError:
     import sys
-    print >> sys.stderr, 'Requires appscript module'
-    print >> sys.stderr, 'http://appscript.sourceforge.net/py-appscript/install.html'
-    print >> sys.stderr, '"sudo easy_install appscript"'
+    sys.stderr.write('Requires appscript module')
+    sys.stderr.write('http://appscript.sourceforge.net/py-appscript/install.html')
+    sys.stderr.write('"sudo easy_install appscript"')
     exit(1)
 
 def rprint(item, tabs=0):
     '''Recursively print Task, Folder, or Group objects'''
     if isinstance(item, Task):
-        print '\t' * tabs, '<Task>', item.title
+        print ('\t' * tabs, '<Task>', item.title)
     if isinstance(item, List):
-        print '\t' * tabs, '<List>', item.name
+        print ('\t' * tabs, '<List>', item.name)
         for task in item.tasks():
             rprint(task, (tabs + 1))
     if isinstance(item, Folder):
-        print '\t' * tabs, '<Folder>', item.name
+        print ('\t' * tabs, '<Folder>', item.name)
         for group in item.groups():
             rprint(group, (tabs + 1))
 
@@ -47,15 +47,12 @@ class Application(object):
             list = getattr(self, name.lower())
             return list()
         '''Recursivly find a List by name'''
-        name = unicode(name, 'utf-8')
         return self.folders().find_list(name)
     def find_folder(self, name):
         '''Recursivly find a Folder by name'''
-        name = unicode(name, 'utf-8')
         return self.folders().find_folder(name)
     def find_task(self, name):
         '''Recursivly find a Task by name'''
-        name = unicode(name, 'utf-8')
         return self.folders().find_task(name)
 
     def add_task(self, task):
@@ -100,13 +97,13 @@ class Task(object):
     def print_obj(self):
         for prop in self._properties:
             value = self.__dict__.get(prop, None)
-            if value: print prop, ':', value
+            if value: print (prop, ':', value)
     def format_obj(self):
         obj = {}
         if self.__dict__.get('title', None):
-            obj[appscript.k.title] = unicode(self.title, 'utf-8')
+            obj[appscript.k.title] = self.title
         if self.__dict__.get('notes', None):
-            obj[appscript.k.notes] = unicode(self.notes, 'utf-8')
+            obj[appscript.k.notes] = self.notes
         return obj
     def __repr__(self):
         return '<%s:%s:%s>' % (self.__class__, self.id, self.title)
@@ -127,7 +124,7 @@ class Group(object):
                 self.__setattr__(prop, func())
     def print_obj(self):
         for prop in self._properties:
-            print prop, self.__getattribute__(prop)
+            print (prop, self.__getattribute__(prop))
     def __repr__(self):
         return '<%s:%s:%s>' % (self.__class__, self.id, self.name)
     def find_list(self, name):
@@ -182,7 +179,7 @@ class Folder(Group):
             elif tmpClass == appscript.k.list_:
                 groups.append(List(group))
             else:
-                print 'Error:', tmpClass
+                print ('Error:', tmpClass)
         return groups
     def add_list(self, list):
         self._raw().make(

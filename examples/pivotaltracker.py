@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # Example for importing PivotalTracker stories into THL
 
-import commands
+import subprocess
 import TheHitList
 from clint.textui import puts, colored
 try:
@@ -15,11 +15,11 @@ except ImportError:
 # To set, from the shell you can use
 # git config <key name> <value>
 # git config thl.list tasks
-PT_LOGIN = commands.getoutput('/usr/local/bin/git config --get pivotal.login')
-PT_PASS = commands.getoutput('/usr/local/bin/git config --get pivotal.password')
-PT_PROJECT_ID = commands.getoutput('/usr/local/bin/git config --get pivotal.projectid')
-PT_QUERY = commands.getoutput('/usr/local/bin/git config --get pivotal.query')
-THL_LIST = commands.getoutput('/usr/local/bin/git config --get thl.list')
+PT_LOGIN = subprocess.check_output('/usr/local/bin/git config --get pivotal.login').strip()
+PT_PASS = subprocess.check_output('/usr/local/bin/git config --get pivotal.password').strip()
+PT_PROJECT_ID = subprocess.check_output('/usr/local/bin/git config --get pivotal.projectid').strip()
+PT_QUERY = subprocess.check_output('/usr/local/bin/git config --get pivotal.query').strip()
+THL_LIST = subprocess.check_output('/usr/local/bin/git config --get thl.list').strip()
 
 
 def add_story(story, list):
@@ -46,7 +46,7 @@ stories = tracker.GetStories(PT_QUERY)
 # Talk to THL
 thl = TheHitList.Application()
 list = thl.find_list(THL_LIST)
-print ''  # Line spacer
+print ('')  # Line spacer
 if list:
     for story in stories:
         add_story(story, list)

@@ -18,7 +18,7 @@ if __name__ == '__main__':
         else:
             list = thl.find_list(opts.show)
         for task in list.tasks():
-            print task.title
+            print (task.title)
         exit()
 
     if (len(args) == 0):
@@ -31,4 +31,4 @@ if __name__ == '__main__':
     else:
         list = thl.find_list(opts.list)
     list.add_task(newtask)
-    print 'Task (%s) has been added' % newtask.title
+    print ('Task (%s) has been added' % newtask.title)

@@ -35,9 +35,9 @@ def show_tasks(thl, opts, args):
         list = 'today'
     else:
         list = args.pop(0)
-    puts(colored.yellow('Showing tasks in %s' % unicode(list, 'utf8', 'replace')))
+    puts(colored.yellow('Showing tasks in %s' % list))
     for task in thl.find_list(list).tasks():
-        print task.title
+        print (task.title)
 
 
 def add_task(thl, opts, args):

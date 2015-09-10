@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # Example script for pulling in tasks from GitHub into TheHitList
-import commands
+import subprocess
 import TheHitList
 try:
     from github2.client import Github
@@ -11,9 +11,9 @@ except ImportError:
 # To set, from the shell you can use
 # git config <key name> <value>
 # git config thl.list tasks
-gh_name = commands.getoutput('/usr/local/bin/git config --get github.user')
-gh_token = commands.getoutput('/usr/local/bin/git config --get github.token')
-thl_list = commands.getoutput('/usr/local/bin/git config --get thl.list')
+gh_name = subprocess.check_output('/usr/local/bin/git config --get github.user').strip()
+gh_token = subprocess.check_output('/usr/local/bin/git config --get github.token').strip()
+thl_list = subprocess.check_output('/usr/local/bin/git config --get thl.list').strip()
 
 
 def add_issue(repo, issue, list):
@@ -32,9 +32,9 @@ def add_issue(repo, issue, list):
         # and if we find our hash in the title
         if hash in task.title:
             # skip it
-            print 'found', title
+            print ('found', title)
             return
-    print 'adding', title
+    print ('adding', title)
     newtask = TheHitList.Task()
     newtask.title = title.encode('utf8')
     list.add_task(newtask)

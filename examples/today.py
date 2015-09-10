@@ -6,8 +6,8 @@ from clint.textui import puts, colored
 thl = TheHitList.Application()
 spacer = colored.blue('-' * 50)
 
-print 'Today\'s Tasks'
-print spacer
+print ('Today\'s Tasks')
+print (spacer)
 for task in thl.today().tasks():
     if task.completed:
         puts(colored.cyan(task.title))
@@ -32,6 +32,6 @@ for task in thl.today().tasks():
     puts(buffer)
 
     if (task.notes != ''):
-        print 'Notes: %s' % task.notes
+        print ('Notes: %s' % task.notes)
 
-    print spacer
+    print (spacer)
